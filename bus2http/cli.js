@@ -3,7 +3,7 @@ var app = require('./app');
 var config = require('./config');
 var cli = exports;
 
-cli.configure = function(override) {
+cli.configure = function() {
   var argv = require('minimist')(process.argv.slice(2), {
     alias: {
       d: 'dump'

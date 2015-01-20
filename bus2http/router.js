@@ -2,6 +2,7 @@ var _ = require('lodash');
 var request = require('request');
 var msb = require('msb');
 var helpers = require('./helpers');
+var debug = require('debug')('bus2http');
 var router = exports;
 var routes;
 
@@ -28,7 +29,7 @@ router.load = function load(newRoutes) {
       };
 
       request(options, function(err, res, body) {
-        if (err) return console.log(err);
+        if (err) return debug(err);
 
         var newRes = contributor.message.res;
 

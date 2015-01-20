@@ -1,14 +1,19 @@
 'use strict';
 var _ = require('lodash');
 var Originator = require('msb').Originator;
+var debug = {
+  ack: require('debug')('http2bus:ack'),
+  contrib: require('debug')('http2bus:contrib')
+};
 
 /*
   Returns a middleware that publishes incoming requests and responds where a response can be constructed.
 
   @param {object} config
-  @param {string} config.namespace
-  @param {number} [config.contribTimeout=3000]
-  @param {number} [config.waitForContribs=-1] 0=return immediately, 1+=return after n contribs, -1=wait until timeout
+  @param {object} config.bus
+  @param {string} config.bus.namespace
+  @param {number} [config.bus.contribTimeout=3000]
+  @param {number} [config.bus.waitForContribs=-1] 0=return immediately, 1+=return after n contribs, -1=wait until timeout
 */
 module.exports = function(config) {
   return function(req, res, next) {
@@ -26,8 +31,8 @@ module.exports = function(config) {
     originator
     .publish()
     .once('error', next)
-    .on('ack', console.log)
-    .on('contrib', console.log)
+    .on('ack', debug.ack)
+    .on('contrib', debug.contrib)
     .once('end', function(message) {
       res.writeHead(message.res.statusCode, message.res.headers);
 
