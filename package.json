@@ -4,7 +4,8 @@
   "description": "HTTP proxy services for microservicebus e.g. http2bus, bus2http",
   "main": "index.js",
   "scripts": {
-    "test": "make test-cov"
+    "test": "make test-cov",
+    "cs": "jscs **/*.js"
   },
   "repository": {
     "type": "git",
@@ -16,15 +17,19 @@
     "url": "https://github.com/ThomasCookOnline/microservice-proxies/issues"
   },
   "homepage": "https://github.com/ThomasCookOnline/microservice-proxies",
+  "devDependencies": {
+    "code": "^1.2.1",
+    "jscs": "^1.10.0",
+    "lab": "^5.2.0",
+    "simple-mock": "^0.2.6"
+  },
   "dependencies": {
     "body-parser": "^1.10.1",
     "finalhandler": "^0.3.3",
     "lodash": "^2.4.1",
+    "minimist": "^1.1.0",
     "msb": "git+ssh://git@github.com:ThomasCookOnline/microservicebus.git",
+    "request": "^2.51.0",
     "router": "^1.0.0"
-  },
-  "devDependencies": {
-    "code": "^1.2.1",
-    "lab": "^5.2.0"
   }
 }
