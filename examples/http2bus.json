@@ -1,0 +1,16 @@
+{
+  "port": 8080,
+  "routes": [
+    {
+      "bus": {
+        "namespace": "test.through",
+        "contribTimeout": 3000,
+        "waitForContribs": 1
+      },
+      "http": {
+        "methods": ["get"],
+        "path": "*"
+      }
+    }
+  ]
+}

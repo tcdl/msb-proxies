@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "bus": {
+        "namespace": "test.through"
+      },
+      "http": {
+        "baseUrl": "http://www.google.com"
+      }
+    }
+  ]
+}
