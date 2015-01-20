@@ -17,6 +17,10 @@
     "url": "https://github.com/ThomasCookOnline/microservice-proxies/issues"
   },
   "homepage": "https://github.com/ThomasCookOnline/microservice-proxies",
+  "bin": {
+    "bus2http": "./bin/bus2http",
+    "http2bus": "./bin/http2bus"
+  },
   "devDependencies": {
     "code": "^1.2.1",
     "jscs": "^1.10.0",
