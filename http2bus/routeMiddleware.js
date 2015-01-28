@@ -1,4 +1,6 @@
 'use strict';
+var qs = require('querystring');
+var parseurl = require('parseurl');
 var _ = require('lodash');
 var Originator = require('msb').Originator;
 var debug = {
@@ -19,12 +21,13 @@ module.exports = function(config) {
   return function(req, res, next) {
     var originator = new Originator(config.bus);
 
+    var urlParts = parseurl(req);
     _.merge(originator.message.req, {
       url: req.url,
       method: req.method,
       headers: req.headers,
       params: req.params,
-      query: req.query,
+      query: qs.parse(urlParts.query),
       body: req.body
     });
 
@@ -34,7 +37,7 @@ module.exports = function(config) {
     .on('ack', debug.ack)
     .on('contrib', debug.contrib)
     .once('end', function(message) {
-      res.writeHead(message.res.statusCode, message.res.headers);
+      res.writeHead(message.res.statusCode || 200, message.res.headers || {});
 
       var body = message.res.body;
       if (message.res.bodyEncoding === 'base64') {
@@ -42,7 +45,7 @@ module.exports = function(config) {
       } else if (message.res.bodyEncoding === 'json') {
         body = JSON.stringify(message.res.body);
       } else {
-        body = message.res.body;
+        body = String(message.res.body);
       }
 
       res.end(body || null);

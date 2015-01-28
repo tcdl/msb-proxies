@@ -2,7 +2,7 @@
   "routes": [
     {
       "bus": {
-        "namespace": "test.through"
+        "namespace": "test:through"
       },
       "http": {
         "baseUrl": "http://www.google.com"
