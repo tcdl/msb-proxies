@@ -1,3 +1,4 @@
+var cors = require('cors');
 var Router = require('router');
 var routeMiddleware = require('./routeMiddleware');
 var wrappedRouter;
@@ -15,7 +16,7 @@ router.load = function load(routes) {
     var methods = route.http.methods || ['get'];
 
     methods.forEach(function(method) {
-      newWrappedRouter[method](route.http.path, routeMiddleware(route));
+      newWrappedRouter[method](route.http.path, cors(route.http.cors), routeMiddleware(route));
     });
   });
 
