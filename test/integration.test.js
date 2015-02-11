@@ -17,6 +17,7 @@ var request = require('request');
 var mock = require('simple-mock').mock;
 var bus2http = require('../bus2http');
 var http2bus = require('../http2bus');
+var localhostBaseUrl = 'http://127.0.0.1:';
 
 /* Tests */
 describe('integration', function() {
@@ -29,7 +30,7 @@ describe('integration', function() {
     if (http2bus.app.server) return done();
 
     http2bus.app.start(function() {
-      http2busBaseUrl = 'http://127.0.0.1:' + http2bus.config.port;
+      http2busBaseUrl = localhostBaseUrl + http2bus.config.port;
       done();
     });
   });
@@ -42,7 +43,7 @@ describe('integration', function() {
     mockServer
     .listen()
     .once('listening', function() {
-      mockBaseUrl = 'http://127.0.0.1:' + this.address().port;
+      mockBaseUrl = localhostBaseUrl + this.address().port;
       done();
     });
   });
@@ -54,7 +55,7 @@ describe('integration', function() {
   describe('on a generalised route', function() {
     before(function(done) {
       var busConfig = {
-        namespace: 'test.integration.general',
+        namespace: 'test:integration:general',
         contribTimeout: 1000,
         waitForContribs: 1
       };
@@ -90,6 +91,42 @@ describe('integration', function() {
       request(reqOptions, function(err, res, body) {
         if (err) return done(err);
 
+        expect(body).equals('rarara');
+        done();
+      });
+    });
+  });
+
+  describe('when there is only an http2bus', function() {
+    before(function(done) {
+      var busConfig = {
+        namespace: 'test:integration:general',
+        contribTimeout: 1000,
+        waitForContribs: 1
+      };
+
+      http2bus.router.load([
+        {
+          http: { path: '*' },
+          bus: busConfig
+        }
+      ]);
+
+      bus2http.router.load([]);
+
+      done();
+    });
+
+    it('will timeout quickly', function(done) {
+      var reqOptions = {
+        method: 'get',
+        url: http2busBaseUrl + '/something?with=a&q=123'
+      };
+
+      request(reqOptions, function(err, res, body) {
+        if (err) return done(err);
+
+        expect(res.statusCode).equals(200);
         expect(body).equals('rarara');
         done();
       });

@@ -37,9 +37,21 @@ module.exports = function(config) {
     .on('ack', debug.ack)
     .on('contrib', debug.contrib)
     .once('end', function(message) {
-      res.writeHead(message.res.statusCode || 200, message.res.headers || {});
-
       var body = message.res.body;
+      var headers = _.omit(message.res.headers || {},
+        'access-control-allow-origin',
+        'access-control-allow-headers',
+        'access-control-allow-methods',
+        'access-control-allow-credentials');
+
+      if (!body) {
+        res.writeHead(message.res.statusCode || 200, _.defaults({ 'content-length': 0 }, headers));
+        res.end();
+        return;
+      } else {
+        res.writeHead(message.res.statusCode || 200, headers);
+      }
+
       if (message.res.bodyEncoding === 'base64') {
         body = new Buffer(message.res.body, 'base64');
       } else if (message.res.bodyEncoding === 'json') {
@@ -48,7 +60,7 @@ module.exports = function(config) {
         body = String(message.res.body);
       }
 
-      res.end(body || null);
+      res.end(body);
     });
   };
 };
