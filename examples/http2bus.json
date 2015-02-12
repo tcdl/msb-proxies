@@ -3,9 +3,6 @@
   "routes": [
     {
       "bus": {
-        "namespace": "test.through",
-    {
-      "bus": {
         "namespace": "test:through",
         "contribTimeout": 3000,
         "waitForContribs": 1
