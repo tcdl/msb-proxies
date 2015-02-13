@@ -27,8 +27,6 @@ describe('integration', function() {
   var mockBaseUrl;
 
   before(function(done) {
-    if (http2bus.app.server) return done();
-
     http2bus.app.start(function() {
       http2busBaseUrl = localhostBaseUrl + http2bus.config.port;
       done();
