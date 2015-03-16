@@ -54,8 +54,8 @@ describe('integration', function() {
     before(function(done) {
       var busConfig = {
         namespace: 'test:integration:general',
-        contribTimeout: 1000,
-        waitForContribs: 1
+        responseTimeout: 1000,
+        waitForResponses: 1
       };
 
       http2bus.router.load([
@@ -99,8 +99,8 @@ describe('integration', function() {
     before(function(done) {
       var busConfig = {
         namespace: 'test:integration:general',
-        contribTimeout: 1000,
-        waitForContribs: 1
+        responseTimeout: 1000,
+        waitForResponses: 1
       };
 
       http2bus.router.load([

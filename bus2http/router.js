@@ -19,9 +19,7 @@ router.load = function load(newRoutes) {
 
   routes = newRoutes;
   routes.forEach(function(route) {
-    var server = route.server = msb.Contributor.createServer(route.bus);
-
-    server
+    route.server = msb.Responder.createServer(route.bus)
     .use(function(request, response, next) {
       var options = {
         method: request.method,

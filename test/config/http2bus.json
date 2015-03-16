@@ -1,0 +1,11 @@
+{
+  "port": 8080,
+  "routes": [
+    {
+      "namespace": "test.through",
+      "methods": ["get"],
+      "path": "*",
+      "waitForResponses": 1
+    }
+  ]
+}

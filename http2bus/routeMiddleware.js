@@ -2,10 +2,10 @@
 var qs = require('querystring');
 var parseurl = require('parseurl');
 var _ = require('lodash');
-var Originator = require('msb').Originator;
+var Requester = require('msb').Requester;
 var debug = {
   ack: require('debug')('http2bus:ack'),
-  contrib: require('debug')('http2bus:contrib')
+  response: require('debug')('http2bus:response')
 };
 
 /*
@@ -14,12 +14,12 @@ var debug = {
   @param {object} config
   @param {object} config.bus
   @param {string} config.bus.namespace
-  @param {number} [config.bus.contribTimeout=3000]
-  @param {number} [config.bus.waitForContribs=-1] 0=return immediately, 1+=return after n contribs, -1=wait until timeout
+  @param {number} [config.bus.responseTimeout=3000]
+  @param {number} [config.bus.waitForResponses=-1] 0=return immediately, 1+=return after n responses, -1=wait until timeout
 */
 module.exports = function(config) {
   return function(req, res, next) {
-    var originator = new Originator(config.bus);
+    var requester = new Requester(config.bus);
 
     var urlParts = parseurl(req);
     var request = {
@@ -31,19 +31,19 @@ module.exports = function(config) {
       body: req.body
     };
 
-    originator
+    requester
     .publish(request)
     .once('error', next)
     .on('ack', debug.ack)
-    .on('contrib', debug.contrib)
+    .on('response', debug.response)
     .once('end', function() {
-      if (!originator.contribMessages.length) {
+      if (!requester.responseMessages.length) {
         res.writeHead(503);
         res.end();
         return;
       }
 
-      var response = _.last(originator.contribMessages).payload;
+      var response = _.last(requester.responseMessages).payload;
       var body = response.body;
       var headers = _.omit(response.headers || {},
         'access-control-allow-origin',

@@ -4,8 +4,8 @@
     {
       "bus": {
         "namespace": "test:through",
-        "contribTimeout": 3000,
-        "waitForContribs": 1
+        "responseTimeout": 3000,
+        "waitForResponses": 1
       },
       "http": {
         "methods": ["get"],
