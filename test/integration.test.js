@@ -124,8 +124,8 @@ describe('integration', function() {
       request(reqOptions, function(err, res, body) {
         if (err) return done(err);
 
-        expect(res.statusCode).equals(200);
-        expect(body).equals('rarara');
+        expect(res.statusCode).equals(503);
+        expect(body).equals('');
         done();
       });
     });

@@ -22,42 +22,45 @@ module.exports = function(config) {
     var originator = new Originator(config.bus);
 
     var urlParts = parseurl(req);
-    _.merge(originator.message.req, {
+    var request = {
       url: req.url,
       method: req.method,
       headers: req.headers,
       params: req.params,
       query: qs.parse(urlParts.query),
       body: req.body
-    });
+    };
 
     originator
-    .publish()
+    .publish(request)
     .once('error', next)
     .on('ack', debug.ack)
     .on('contrib', debug.contrib)
-    .once('end', function(message) {
-      var body = message.res.body;
-      var headers = _.omit(message.res.headers || {},
+    .once('end', function() {
+      if (!originator.contribMessages.length) {
+        res.writeHead(503);
+        res.end();
+        return;
+      }
+
+      var response = _.last(originator.contribMessages).payload;
+      var body = response.body;
+      var headers = _.omit(response.headers || {},
         'access-control-allow-origin',
         'access-control-allow-headers',
         'access-control-allow-methods',
         'access-control-allow-credentials');
 
-      if (!body) {
-        res.writeHead(message.res.statusCode || 200, _.defaults({ 'content-length': 0 }, headers));
-        res.end();
-        return;
-      } else {
-        res.writeHead(message.res.statusCode || 200, headers);
+      if (response.bodyBuffer) {
+        body = new Buffer(response.bodyBuffer, 'base64');
+      } else if (body && !_.isString(body)) {
+        body = JSON.stringify(body);
       }
 
-      if (message.res.bodyEncoding === 'base64') {
-        body = new Buffer(message.res.body, 'base64');
-      } else if (message.res.bodyEncoding === 'json') {
-        body = JSON.stringify(message.res.body);
+      if (!body) {
+        res.writeHead(response.statusCode || 200, _.defaults({ 'content-length': 0 }, headers));
       } else {
-        body = String(message.res.body);
+        res.writeHead(response.statusCode || 200, headers);
       }
 
       res.end(body);

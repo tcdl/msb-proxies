@@ -18,6 +18,8 @@ router.load = function load(routes) {
     methods.forEach(function(method) {
       newWrappedRouter[method](route.http.path, cors(route.http.cors), routeMiddleware(route));
     });
+
+    if (!~methods.indexOf('options')) newWrappedRouter.options(route.http.path, cors(route.http.cors));
   });
 
   wrappedRouter = newWrappedRouter;
