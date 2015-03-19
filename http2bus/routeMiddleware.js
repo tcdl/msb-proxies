@@ -38,7 +38,7 @@ module.exports = function(config) {
     .on('response', debug.response)
     .once('end', function() {
       if (!requester.responseMessages.length) {
-        res.writeHead(503);
+        res.writeHead((config.bus.waitForResponses) ? 503 : 204);
         res.end();
         return;
       }

@@ -1,4 +1,5 @@
 
 exports.contentTypeIsText = function(contentType) {
-  return contentType.match(/(text|json)/);
+  var match = contentType.match(/(text|json)/);
+  return match && match[0];
 };
