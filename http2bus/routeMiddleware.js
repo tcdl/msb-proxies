@@ -15,7 +15,7 @@ var debug = {
   @param {object} config.bus
   @param {string} config.bus.namespace
   @param {number} [config.bus.responseTimeout=3000]
-  @param {number} [config.bus.waitForResponses=-1] 0=return immediately, 1+=return after n responses, -1=wait until timeout
+  @param {number} [config.bus.waitForResponses=-1] 0=return immediately, 1+=return after n, -1=wait until timeout
 */
 module.exports = function(config) {
   return function(req, res, next) {

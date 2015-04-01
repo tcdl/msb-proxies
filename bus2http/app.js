@@ -4,7 +4,6 @@ var config = require('./config');
 var router = require('./router');
 
 app.start = function() {
-  if (config.serviceName) msb.serviceDetails.name = config.serviceName;
   if (config.bus) msb.configure(config.bus);
   if (config.channelMonitorEnabled) msb.channelMonitorAgent.start();
 

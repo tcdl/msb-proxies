@@ -1,4 +1,5 @@
 {
+  "channelMonitorEnabled": false,
   "routes": [
     {
       "bus": {

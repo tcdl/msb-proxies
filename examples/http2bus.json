@@ -1,4 +1,5 @@
 {
+  "channelMonitorEnabled": false,
   "port": 8080,
   "routes": [
     {
@@ -8,7 +9,7 @@
         "waitForResponses": 1
       },
       "http": {
-        "methods": ["get"],
+        "methods": ["get", "post", "put", "head"],
         "path": "*"
       }
     }

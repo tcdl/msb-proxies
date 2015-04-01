@@ -27,14 +27,14 @@ describe('bus2http.app', function() {
   describe('start()', function() {
     it('should configure for bus, load routes', function(done) {
       simple.mock(msb, 'configure').returnWith();
-      simple.mock(msb.channelMonitor, 'startBroadcasting').returnWith();
+      simple.mock(msb.channelMonitorAgent, 'start').returnWith();
       simple.mock(router, 'load').returnWith();
 
       app.start();
 
       expect(msb.configure.called).true();
       expect(msb.configure.lastCall.args[0]).equals(bus2http.config.bus);
-      expect(msb.channelMonitor.startBroadcasting.called).true();
+      expect(msb.channelMonitorAgent.start.called).true();
       expect(router.load.called).true();
       expect(router.load.lastCall.args[0]).equals(bus2http.config.routes);
 

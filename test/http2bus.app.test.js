@@ -26,7 +26,7 @@ describe('http2bus.app', function() {
   describe('start()', function() {
     it('should configure for bus, start broadcasting and server should listen', function(done) {
       simple.mock(msb, 'configure').returnWith();
-      simple.mock(msb.channelMonitor, 'startBroadcasting').returnWith();
+      simple.mock(msb.channelMonitorAgent, 'start').returnWith();
 
       var mockServer = {};
       simple.mock(mockServer, 'listen').returnWith(mockServer);
@@ -38,7 +38,7 @@ describe('http2bus.app', function() {
 
         expect(msb.configure.called).true();
         expect(msb.configure.lastCall.args[0]).equals(http2bus.config.bus);
-        expect(msb.channelMonitor.startBroadcasting.called).true();
+        expect(msb.channelMonitorAgent.start.called).true();
         expect(mockServer.listen.called).true();
 
         done();
