@@ -35,7 +35,11 @@ router.load = function load(newRoutes) {
         var textType = helpers.contentTypeIsText(res.headers['content-type'] || '');
 
         if (textType === 'json') {
-          body = JSON.parse(body);
+          try {
+            body = JSON.parse(body);
+          } catch (e) {
+            // If it fails to parse, it will just be sent as a blob
+          }
         } else if (textType) {
           body = body.toString();
         }
