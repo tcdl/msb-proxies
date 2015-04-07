@@ -1,2 +1,2 @@
-exports.bus2http = require('./bus2http');
-exports.http2bus = require('./http2bus');
+exports.bus2http = require('./lib/bus2http');
+exports.http2bus = require('./lib/http2bus');

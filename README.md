@@ -3,7 +3,6 @@
 HTTP adapters for [microservicebus](http://github.com/tcdl/msb) framework
 
 ![e.g. http2bus and bus2http](docs/end-to-end.png)
-<!-- ![e.g. http2bus and bus2http](https://rawgithub.com/tcdl/msb-proxies/docs/end-to-end.png) -->
 
 ## Installation
 

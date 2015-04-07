@@ -14,7 +14,7 @@ var expect = Code.expect;
 /* Modules */
 var simple = require('simple-mock');
 var msb = require('msb');
-var bus2http = require('../bus2http');
+var bus2http = require('../lib/bus2http');
 var app = bus2http.app;
 var router = bus2http.router;
 
