@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ThomasCookOnline/microservice-proxies.git"
+    "url": "https://github.com/tcdl/msb-proxies.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ThomasCookOnline/microservice-proxies/issues"
+    "url": "https://github.com/tcdl/msb-proxies/issues"
   },
-  "homepage": "https://github.com/ThomasCookOnline/microservice-proxies",
+  "homepage": "https://github.com/tcdl/msb-proxies",
   "bin": {
     "bus2http": "./bin/bus2http",
     "http2bus": "./bin/http2bus"
@@ -36,7 +36,7 @@
     "finalhandler": "^0.3.3",
     "lodash": "^2.4.1",
     "minimist": "^1.1.0",
-    "msb": "git+ssh://git@github.com:ThomasCookOnline/microservicebus.git",
+    "msb": "git+ssh://git@github.com:tcdl/msb.git",
     "parseurl": "^1.3.0",
     "request": "^2.51.0",
     "router": "^1.0.0"
