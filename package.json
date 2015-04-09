@@ -4,7 +4,7 @@
   "description": "HTTP proxy services for microservicebus e.g. http2bus, bus2http",
   "main": "index.js",
   "scripts": {
-    "test": "lab -t 100",
+    "test": "lab -t 95",
     "test-watch": "nodemon node_modules/lab/bin/lab -cv",
     "cs": "jscs **/*.js"
   },
