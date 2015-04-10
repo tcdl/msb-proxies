@@ -34,7 +34,7 @@
     "finalhandler": "^0.3.3",
     "lodash": "^2.4.1",
     "minimist": "^1.1.0",
-    "msb": "git+ssh://git@github.com:tcdl/msb.git",
+    "msb": "^0.3.0",
     "parseurl": "^1.3.0",
     "raw-body": "^1.3.3",
     "request": "^2.51.0",
