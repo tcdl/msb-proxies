@@ -2,6 +2,7 @@
   "name": "msb-proxies",
   "version": "0.1.2",
   "description": "HTTP proxy services for microservicebus e.g. http2bus, bus2http",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "test": "lab -t 95",
@@ -12,8 +13,6 @@
     "type": "git",
     "url": "https://github.com/tcdl/msb-proxies.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/tcdl/msb-proxies/issues"
   },
