@@ -1,4 +1,4 @@
-# msb-proxies
+# msb-proxies ![Project status](https://travis-ci.org/tcdl/msb-proxies.svg?branch=master)
 
 HTTP adapters for [microservicebus](http://github.com/tcdl/msb) framework
 
@@ -102,7 +102,7 @@ With a local Redis container and with configuration on host.
 (Assuming files exist on the host at `/etc/msb-proxies/msb.json` and `/etc/msb-proxies/http2bus.json`.)
 
 ```
-$ docker run --name http2bus --rm --link redis:redis -v /etc/msb-proxies:/opt/msb-proxies/config msb-proxies bin/http2bus config/http2bus.json
+$ docker run --name http2bus -d --link redis:redis -v /etc/msb-proxies:/opt/msb-proxies/config msb-proxies bin/http2bus config/http2bus.json
 ```
 
 #### bus2http
