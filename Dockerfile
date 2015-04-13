@@ -20,7 +20,7 @@ ADD . /opt/msb-proxies
 VOLUME ["/opt/msb-proxies/config"]
 
 # Default config
-ENV MSB_CONFIG_PATH=/opt/msb-proxies/config
+ENV MSB_CONFIG_PATH=/opt/msb-proxies/config/msb.json
 
 # Default port to expose
 EXPOSE 8080
