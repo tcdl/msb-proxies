@@ -15,7 +15,7 @@ $ npm install msb-proxies -g
 ## http2bus
 
 ```
-$ http2bus -p=8080 examples/http2bus.json
+$ http2bus -p 8080 examples/http2bus.json
 ```
 
 Arguments:
