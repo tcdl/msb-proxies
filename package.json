@@ -1,6 +1,6 @@
 {
   "name": "msb-proxies",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "HTTP proxy services for microservicebus e.g. http2bus, bus2http",
   "license": "MIT",
   "main": "index.js",
