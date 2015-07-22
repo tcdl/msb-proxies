@@ -239,7 +239,7 @@ describe('integration', function() {
 
     it('can translate a redirect', function(done) {
       mockHandler = function(req, res) {
-        res.writeHead(302, { 'location': '/etc/123' });
+        res.writeHead(302, { 'location': '/etc/123?original=' + req.url });
         res.end();
       };
 
@@ -252,7 +252,7 @@ describe('integration', function() {
       request(reqOptions, function(err, res) {
         if (err) return done(err);
 
-        expect(res.headers.location).equals('/api/etc/123');
+        expect(res.headers.location).equals('/api/etc/123?original=/something');
 
         done();
       });
