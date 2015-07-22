@@ -152,7 +152,7 @@ describe('integration', function() {
 
       http2bus.router.load([
         {
-          http: { path: '*', methods: ['put', 'post'] },
+          http: { path: '*', methods: ['put', 'post'], baseUrl: '/api' },
           bus: busConfig
         }
       ]);
@@ -189,7 +189,7 @@ describe('integration', function() {
     it('can upload a text body', function(done) {
       var reqOptions = {
         method: 'put',
-        url: http2busBaseUrl + '/upload',
+        url: http2busBaseUrl + '/api/upload',
         headers: {
           'content-type': 'text'
         },
@@ -207,7 +207,7 @@ describe('integration', function() {
     it('can upload a json body', function(done) {
       var reqOptions = {
         method: 'put',
-        url: http2busBaseUrl + '/upload',
+        url: http2busBaseUrl + '/api/upload',
         headers: {
           'content-type': 'application/json'
         },
@@ -225,7 +225,7 @@ describe('integration', function() {
     it('can upload a buffer body', function(done) {
       var reqOptions = {
         method: 'put',
-        url: http2busBaseUrl + '/upload',
+        url: http2busBaseUrl + '/api/upload',
         body: new Buffer(200000)
       };
 
@@ -233,6 +233,27 @@ describe('integration', function() {
         if (err) return done(err);
 
         expect(reqBodyBuffer.toString()).equals(reqOptions.body.toString());
+        done();
+      });
+    });
+
+    it('can translate a redirect', function(done) {
+      mockHandler = function(req, res) {
+        res.writeHead(302, { 'location': '/etc/123' });
+        res.end();
+      };
+
+      var reqOptions = {
+        method: 'put',
+        url: http2busBaseUrl + '/api/something',
+        followRedirect: false
+      };
+
+      request(reqOptions, function(err, res) {
+        if (err) return done(err);
+
+        expect(res.headers.location).equals('/api/etc/123');
+
         done();
       });
     });

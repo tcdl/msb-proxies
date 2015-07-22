@@ -40,7 +40,16 @@ Example:
       },
       "http": {
         "methods": ["get"],
-        "path": "/api/item/:id"
+        "path": "/api/items/:id"
+      }
+    },
+
+    {
+      "bus": { ... },
+      "http": {
+        "methods": ["post"],
+        "baseUrl": "/api",
+        "path": "/items"
       }
     }
   ]
