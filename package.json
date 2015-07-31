@@ -36,7 +36,7 @@
     "finalhandler": "^0.3.3",
     "lodash": "^3.9.3",
     "minimist": "^1.1.0",
-    "msb": ">=0.6.0 <1",
+    "msb": ">=0.8.0 <1",
     "parseurl": "^1.3.0",
     "raw-body": "^1.3.3",
     "request": "^2.51.0",
