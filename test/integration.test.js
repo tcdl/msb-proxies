@@ -14,6 +14,7 @@ var expect = Code.expect;
 /* Modules */
 var stream = require('stream');
 var msb = require('..');
+var _ = require('lodash');
 var request = require('request');
 var mock = require('simple-mock').mock;
 var bus2http = require('../lib/bus2http');
@@ -56,7 +57,8 @@ describe('integration', function() {
       var busConfig = {
         namespace: 'test:integration:general',
         responseTimeout: 1000,
-        waitForResponses: 1
+        waitForResponses: 1,
+        tags: ['http2bus']
       };
 
       http2bus.router.load([
@@ -68,7 +70,9 @@ describe('integration', function() {
 
       bus2http.router.load([
         {
-          bus: busConfig,
+          bus: _.defaults({
+            tags: ['bus2http']
+          }, busConfig),
           http: { baseUrl: mockBaseUrl }
         }
       ]);
@@ -134,6 +138,34 @@ describe('integration', function() {
       request(reqOptions, function(err, res, body) {
         if (err) return done(err);
         expect(body.toString()).equals(buf.toString());
+        done();
+      });
+    });
+
+    it('can provide tags from the header and query string', function(done) {
+      mockHandler = function(req, res) {
+        res.writeHead(200, {
+          'content-type': 'application/json'
+        });
+        res.end(JSON.stringify({
+          tags: req.headers['x-msb-tags'] || []
+        }));
+      };
+
+      var reqOptions = {
+        method: 'get',
+        url: http2busBaseUrl + '/something?with=a&q=123&_x-msb-tags=query-a&_x-msb-tags=query-b,query-c',
+        headers: {
+          'x-msb-tags': 'part-a',
+          'x-Msb-tags': 'part-b,part-c'
+        },
+        json: true
+      };
+
+      request(reqOptions, function(err, res, body) {
+        if (err) return done(err);
+
+        expect(body.tags.indexOf('part-b,part-c,query-a,query-b,query-c,http2bus')).above(10);
         done();
       });
     });
@@ -245,14 +277,14 @@ describe('integration', function() {
 
       var reqOptions = {
         method: 'put',
-        url: http2busBaseUrl + '/api/something',
+        url: http2busBaseUrl + '/api-something',
         followRedirect: false
       };
 
       request(reqOptions, function(err, res) {
         if (err) return done(err);
 
-        expect(res.headers.location).equals('/api/etc/123?original=/something');
+        expect(res.headers.location).equals('/api/etc/123?original=/-something');
 
         done();
       });
