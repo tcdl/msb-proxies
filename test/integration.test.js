@@ -165,9 +165,7 @@ describe('integration', function() {
       request(reqOptions, function(err, res, body) {
         if (err) return done(err);
 
-        expect(body).deep.equals({
-          "tags": "part-b,part-c,query-a,query-b,query-c,http2bus"
-        });
+        expect(body.tags.indexOf('part-b,part-c,query-a,query-b,query-c,http2bus')).above(10);
         done();
       });
     });
