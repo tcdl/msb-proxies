@@ -17,6 +17,7 @@ var simple = require('simple-mock');
 var msb = require('msb');
 var Router = require('router');
 var routerWrapper = require('../lib/http2bus/models/routerWrapper');
+var routesInfoCenter = require('../lib/http2bus/models/routesInfoCenter');
 var RoutesProvider = require('../lib/http2bus/models/routesProvider').RoutesProvider;
 
 describe('RoutesProvider', function() {
@@ -32,11 +33,12 @@ describe('RoutesProvider', function() {
 
     beforeEach(function(done) {
       mockInfoCenter = {
+        start: simple.mock(),
         on: simple.mock(),
         removeListener: simple.mock()
       };
 
-      simple.mock(RoutesProvider, 'sharedInfoCenter').returnWith(mockInfoCenter);
+      simple.mock(routesInfoCenter, 'sharedInfoCenter').returnWith(mockInfoCenter);
 
       mockRouterWrapper = {
         reset: simple.mock(),
@@ -56,7 +58,7 @@ describe('RoutesProvider', function() {
         name: 'abc'
       });
 
-      expect(RoutesProvider.sharedInfoCenter.callCount).equals(1);
+      expect(routesInfoCenter.sharedInfoCenter.callCount).equals(1);
       expect(mockInfoCenter.on.callCount).equals(1);
       expect(mockInfoCenter.on.lastCall.args[0]).equals('updated');
 
