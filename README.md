@@ -48,7 +48,7 @@ Example:
       "bus": { ... },
       "http": {
         "methods": ["post"],
-        "baseUrl": "/api",
+        "basePath": "/api",
         "path": "/items"
       }
     }

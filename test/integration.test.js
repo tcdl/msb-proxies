@@ -184,7 +184,7 @@ describe('integration', function() {
 
       http2bus.router.load([
         {
-          http: { path: '*', methods: ['put', 'post'], baseUrl: '/api' },
+          http: { path: '*', methods: ['put', 'post'], basePath: '/api' },
           bus: busConfig
         }
       ]);

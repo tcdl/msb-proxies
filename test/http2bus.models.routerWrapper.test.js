@@ -167,7 +167,7 @@ describe('RouterWrapper', function() {
       routerWrapper.load([{
         provider: { name: 'abc' },
         http: {
-          baseUrl: '/ex'
+          basePath: '/ex'
         }
       }]);
 
@@ -204,7 +204,7 @@ describe('RouterWrapper', function() {
       routerWrapper.load([{
         provider: { name: 'abc' },
         http: {
-          baseUrl: '/ex'
+          basePath: '/ex'
         }
       }]);
 
@@ -223,7 +223,7 @@ describe('RouterWrapper', function() {
         routerWrapper.load([{
           provider: { name: 'abc' },
           http: {
-            baseUrl: '/ex'
+            basePath: '/ex'
           }
         }]);
 
@@ -269,7 +269,7 @@ describe('RouterWrapper', function() {
       routerWrapper.load([{
         provider: { name: 'abc' },
         http: {
-          baseUrl: '/ex'
+          basePath: '/ex'
         }
       }]);
 
@@ -288,7 +288,7 @@ describe('RouterWrapper', function() {
         routerWrapper.load([{
           provider: { name: 'abc' },
           http: {
-            baseUrl: '/ex'
+            basePath: '/ex'
           }
         }]);
 
