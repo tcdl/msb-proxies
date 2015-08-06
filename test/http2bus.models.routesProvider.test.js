@@ -157,16 +157,73 @@ describe('RoutesProvider', function() {
         done();
       });
 
-      it('should set the routes where provided', function(done) {
+      it('should set the routes where provided for the first time', function(done) {
         var doc = {
           abc: {
-            routes: [],
+            ttl: 115,
+            routes: []
+          }
+        };
+
+        routesProvider.providerRoutesDoc = null;
+        routesProvider._onInfoCenterUpdated(doc);
+
+        expect(routesProvider.providerRoutesDoc).equals(doc.abc);
+        expect(routesProvider.ttlExpiresAt).exists();
+
+        var ttlDiff = routesProvider.ttlExpiresAt - Date.now();
+        expect(ttlDiff).above(110);
+        expect(ttlDiff).below(120);
+
+        expect(mockRouterWrapper.load.callCount).equals(1);
+        expect(mockRouterWrapper.load.lastCall.arg).equals(doc.abc.routes);
+
+        done();
+      });
+
+      it('should set the routes where provided, without ttl', function(done) {
+        var doc = {
+          abc: {
+            routes: []
           }
         };
 
         routesProvider._onInfoCenterUpdated(doc);
 
         expect(routesProvider.providerRoutesDoc).equals(doc.abc);
+        expect(routesProvider.ttlExpiresAt).not.exists();
+
+        expect(mockRouterWrapper.load.callCount).equals(1);
+        expect(mockRouterWrapper.load.lastCall.arg).equals(doc.abc.routes);
+
+        done();
+      });
+
+      it('should set the routes where provided, with ttl', function(done) {
+        var doc = {
+          abc: {
+            ttl: 115,
+            versionHash: 'etc',
+            routes: [
+              {
+                provider: {}
+              },
+              {}
+            ]
+          }
+        };
+
+        routesProvider._onInfoCenterUpdated(doc);
+
+        expect(routesProvider.providerRoutesDoc).equals(doc.abc);
+        expect(routesProvider.ttlExpiresAt).exists();
+
+        var ttlDiff = routesProvider.ttlExpiresAt - Date.now();
+        expect(ttlDiff).above(110);
+        expect(ttlDiff).below(120);
+
+
+        expect(doc.abc.routes[0].provider.versionHash).equals(doc.abc.versionHash);
         expect(mockRouterWrapper.load.callCount).equals(1);
         expect(mockRouterWrapper.load.lastCall.arg).equals(doc.abc.routes);
 
@@ -180,19 +237,43 @@ describe('RoutesProvider', function() {
           }
         };
 
+        routesProvider.providerRoutesDoc = {};
+        routesProvider.ttlExpiresAt = null;
         routesProvider._onInfoCenterUpdated(doc);
 
-        expect(routesProvider.providerRoutesDoc).equals(undefined);
+        expect(routesProvider.providerRoutesDoc).equals(null);
+        expect(routesProvider.ttlExpiresAt).equals(null);
         expect(mockRouterWrapper.reset.callCount).equals(1);
         expect(mockRouterWrapper.load.callCount).equals(0);
 
         done();
       });
 
-      it('should do nothing if the routes are unchanged', function(done) {
+      it('should do nothing where routes are not provided and unexpired ttl', function(done) {
+        var doc = {
+          ddd: {
+            routes: []
+          }
+        };
+
+        var doc = routesProvider.providerRoutesDoc = {};
+        var ttl = routesProvider.ttlExpiresAt = Infinity;
+
+        routesProvider._onInfoCenterUpdated(doc);
+
+        expect(routesProvider.providerRoutesDoc).equals(doc);
+        expect(routesProvider.ttlExpiresAt).equals(ttl);
+        expect(mockRouterWrapper.reset.callCount).equals(0);
+        expect(mockRouterWrapper.load.callCount).equals(0);
+
+        done();
+      });
+
+      it('should do nothing, but set ttl, if the routes are unchanged', function(done) {
         var doc = {
           abc: {
             versionHash: 'zzz',
+            ttl: 115,
             routes: []
           }
         };
@@ -201,11 +282,18 @@ describe('RoutesProvider', function() {
         routesProvider._onInfoCenterUpdated(doc);
 
         expect(routesProvider.providerRoutesDoc).not.equals(doc.abc);
+        expect(routesProvider.ttlExpiresAt).exists();
+
+        var ttlDiff = routesProvider.ttlExpiresAt - Date.now();
+        expect(ttlDiff).above(110);
+        expect(ttlDiff).below(120);
+
         expect(mockRouterWrapper.load.callCount).equals(0);
         expect(mockRouterWrapper.reset.callCount).equals(0);
 
         done();
       });
+
     });
   });
 
