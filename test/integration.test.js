@@ -13,12 +13,11 @@ var expect = Code.expect;
 
 /* Modules */
 var stream = require('stream');
-var msb = require('..');
 var _ = require('lodash');
 var request = require('request');
 var mock = require('simple-mock').mock;
-var bus2http = require('../lib/bus2http');
-var http2bus = require('../lib/http2bus');
+var bus2http = require('msb-bus2http');
+var http2bus = require('msb-http2bus');
 var localhostBaseUrl = 'http://127.0.0.1:';
 
 /* Tests */
@@ -29,7 +28,7 @@ describe('integration', function() {
   var mockBaseUrl;
 
   before(function(done) {
-    http2bus.app.start(function() {
+    http2bus.start(function() {
       http2busBaseUrl = localhostBaseUrl + http2bus.config.port;
       done();
     });

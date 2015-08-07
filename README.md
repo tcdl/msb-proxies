@@ -2,7 +2,12 @@
 
 HTTP adapters for [microservicebus](http://github.com/tcdl/msb) framework
 
-![e.g. http2bus and bus2http](docs/end-to-end.png)
+![e.g. http2bus and bus2http](doc/end-to-end.png)
+
+## Note
+
+This module has been split into two separate modules, [msb-http2bus](https://github.com/tcdl/msb-http2bus) and [msb-bus2http](https:/
+/github.com/tcdl/msb-bus2http). This module will only be available for compatibility and integration tests.
 
 ## Installation
 
@@ -15,7 +20,7 @@ $ npm install msb-proxies -g
 ## http2bus
 
 ```
-$ http2bus -p 8080 examples/http2bus.json
+$ http2bus -p 8080 example/http2bus.json
 ```
 
 Arguments:
@@ -59,7 +64,7 @@ Example:
 ## bus2http
 
 ```
-$ bus2http examples/http2bus.json
+$ bus2http example/http2bus.json
 ```
 
 Arguments:

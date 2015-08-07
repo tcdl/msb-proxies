@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../lib/bus2http/cli').start();
+require('msb-bus2http/lib/cli').start();
